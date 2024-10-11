@@ -120,3 +120,9 @@ logs/
 */mnist
 *.csv
 !.dvc
+
+code/loaded_datasets/*
+code/models_chkps/*
+code/results/*
+
+!**/.gitkeep

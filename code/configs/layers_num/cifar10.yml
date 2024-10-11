@@ -1,0 +1,15 @@
+dataset_name: 'CIFAR10'
+train_batch_size: 64
+learning_rate: 1.0e-3
+num_epochs: 15
+input_size: [32,32]
+input_channels: 3
+channels: 5
+layers_num_range: [2, 8]
+kernel_size: 3
+classes: 10
+save_model_path_prefix: './models_chkps/cifar10_change_layers'
+save_results_path: './results/cifar10_change_layers.json'
+save_figs_path: './figures/cifar10_change_layers.pdf'
+legend_title: '$L$ (num of layers)'
+exp_type: 'change layers num'
