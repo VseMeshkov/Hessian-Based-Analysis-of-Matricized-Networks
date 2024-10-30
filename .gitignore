@@ -121,8 +121,10 @@ logs/
 *.csv
 !.dvc
 
-code/loaded_datasets/*
-code/models_chkps/*
-code/results/*
+loaded_datasets/*
+models_chkps/*
+results/*
+
+venv
 
 !**/.gitkeep
