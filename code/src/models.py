@@ -50,7 +50,70 @@ class ConvNet(nn.Module):
         logits = self.head(flattened)
         return logits
 
+class ConvNetWithPool(nn.Module):
+    def __init__(self, channels_list, ker_size_list, 
+                 classes, input_sizes, 
+                 pool_position, pool_type):
+        super(ConvNetWithPool, self).__init__()
+        self.flat_size = self._calc_flattended_size(channels_list, ker_size_list, input_sizes, pool_position)
+        self._build_conv_laysers(channels_list, ker_size_list, pool_position, pool_type)
+        self.flat = nn.Flatten()
+        self.fc = nn.Linear(self.flat_size, classes)
+
+    def _build_conv_laysers(self, 
+                            channels_list, ker_size_list, 
+                            pool_position, pool_type):
+        self.conv_part = []
+        for i, (ker, in_channels, out_channels) in enumerate(zip(ker_size_list, channels_list[:-1], channels_list[1:])):
+            self.conv_part.append(nn.Conv2d(in_channels, out_channels, ker))
+            if i != pool_position:
+                if i != len(ker_size_list):
+                    self.conv_part.append(nn.ReLU())
+            elif pool_type == 'max':
+                self.conv_part.append(nn.MaxPool2d(2))
+            elif pool_type == 'avg':
+                self.conv_part.append(nn.AvgPool2d(2))
+        self.conv_part = nn.Sequential(*self.conv_part) 
+
+    def _calc_flattended_size(self, 
+                              channels_list, ker_size_list, 
+                              input_sizes, 
+                              pool_position):
+        size = input_sizes[0]
+        for i, ker in enumerate(ker_size_list):
+            size = size - ker + 1
+            if i == pool_position:
+                size = size // 2
+        size = size**2
+        size = size*channels_list[-1]
+        return size
+        
+    def forward(self, input):
+        return self.fc(self.flat(self.conv_part(input)))
+
+
 def make_default_model_use_layers_num(config, layers_num):
     channels_list = [config.input_channels]+[config.channels]*layers_num
     ker_size_list = [config.kernel_size]*layers_num
     return ConvNet(channels_list, ker_size_list, config.classes, tuple(config.input_size))
+
+def make_default_model_use_kernel_size(config, kernel_size):
+    layers_num = config.layers_num
+    channels_list = [config.input_channels]+[config.channels]*layers_num
+    ker_size_list = [kernel_size]*layers_num
+    return ConvNet(channels_list, ker_size_list, config.classes, tuple(config.input_size))
+
+def make_default_model_use_channel_size(config, channels):
+    channels_list = [config.input_channels] + [channels]*config.layers_num
+    ker_size_list = [config.kernel_size]*config.layers_num
+    return ConvNet(channels_list, ker_size_list, config.classes, tuple(config.input_size))
+
+def make_default_model_use_maxpool_position(config, pos):
+    channels_list = [config.input_channels] + [config.channels]*config.layers_num
+    ker_size_list = [config.kernel_size]*config.layers_num
+    return ConvNetWithPool(channels_list, ker_size_list, config.classes, tuple(config.input_size), pos, 'max')
+
+def make_default_model_use_avgpool_position(config, pos):
+    channels_list = [config.input_channels] + [config.channels]*config.layers_num
+    ker_size_list = [config.kernel_size]*config.layers_num
+    return ConvNetWithPool(channels_list, ker_size_list, config.classes, tuple(config.input_size), pos, 'avg')

@@ -1,0 +1,15 @@
+dataset_name: 'CIFAR10'
+train_batch_size: 64
+learning_rate: 1.0e-3
+num_epochs: 15
+input_size: [32,32]
+input_channels: 3
+channels_range: [6, 12, 18, 24, 30, 36, 42]
+layers_num: 5
+kernel_size: 3
+classes: 10
+save_model_path_prefix: './models_chkps/cifar10_change_channels'
+save_results_path: './results/cifar10_change_channels.json'
+save_figs_path: './figures/cifar10_change_channels.pdf'
+legend_title: '$C$ (num of channels)'
+exp_type: 'change channels'

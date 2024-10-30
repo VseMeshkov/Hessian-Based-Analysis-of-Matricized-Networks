@@ -1,5 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
+from matplotlib.ticker import LogFormatterSciNotation
+from matplotlib.ticker import FuncFormatter, LogLocator, LogFormatter
 import json
 
 myparams = {
@@ -10,6 +13,7 @@ myparams = {
     'axes.grid': True,
     'grid.alpha': 0.3,
     'lines.linewidth': 2,
+    'legend.fontsize':11
 }
 plt.rcParams.update(myparams)
 
@@ -58,11 +62,13 @@ def visualize_and_save(config, bootstreped_size, begin_with = 10000):
         x = np.arange(len(ys[param]))[begin_with:]
         plt.plot(x, exp_smooth(ys[param], 0.995)[begin_with:], label = param)
     
+    plt.yscale('log')
+
     plt.legend(title = config.legend_title)
     plt.title(config.dataset_name)
     plt.xlabel('$k$ (sample size)')
     plt.ylabel(r"$\left| \mathcal{L}_{k+1}(\hat{\boldsymbol{\theta}}) - \mathcal{L}_k(\hat{\boldsymbol{\theta}}) \right|$")
-    plt.yscale('log')
+
     plt.tight_layout()
     #########################
 

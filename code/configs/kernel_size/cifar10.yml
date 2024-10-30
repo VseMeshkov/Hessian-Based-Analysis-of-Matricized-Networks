@@ -1,0 +1,15 @@
+dataset_name: 'CIFAR10'
+train_batch_size: 64
+learning_rate: 1.0e-3
+num_epochs: 15
+input_size: [32,32]
+input_channels: 3
+channels: 6
+layers_num: 4
+kernel_size_range: [2, 3, 4, 5]
+classes: 10
+save_model_path_prefix: './models_chkps/cifar10_change_kers'
+save_results_path: './results/cifar10_change_kers.json'
+save_figs_path: './figures/cifar10_change_kers.pdf'
+legend_title: '$k$ (kernel size)'
+exp_type: 'change kernel size'

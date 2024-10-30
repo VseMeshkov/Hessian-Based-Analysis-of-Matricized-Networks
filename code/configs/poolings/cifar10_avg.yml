@@ -1,0 +1,16 @@
+dataset_name: 'CIFAR10'
+train_batch_size: 64
+learning_rate: 1.0e-3
+num_epochs: 10
+input_size: [32, 32]
+input_channels: 3
+channels: 12
+layers_num: 5
+kernel_size: 3
+classes: 10
+avgpool_positions: [1, 2, 3, 4] # after pos (start from 0)
+save_model_path_prefix: './models_chkps/cifar10_change_avgpool_pos'
+save_results_path: './results/cifar10_change_avgpool_pos.json'
+save_figs_path: './figures/cifar10_change_avgpool_pos.pdf'
+legend_title: '$pos$ (average pooling position)'
+exp_type: 'change avgpool pos'
