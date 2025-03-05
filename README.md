@@ -6,8 +6,8 @@ Analysis of Matricized Networks</h1>
 
 <sup>1</sup> Moscow Institute of Physics and Technology
 
-[📝 Paper]()
-</div>https://ieeexplore.ieee.org/document/10899113?denied=</div>
+[📝 Paper](https://ieeexplore.ieee.org/document/10899113?denied=)
+</div>
 
 **Installation:**  
 
@@ -17,11 +17,14 @@ Analysis of Matricized Networks</h1>
 **Experiments:**
 
 Choose any config you need and train appropriate group of models, for exmple:
-- python3 train --config_path=configs/layers_num/fashion_mnist.yml
+```code
+python3 train --config_path=configs/layers_num/fashion_mnist.yml
+```
 
 Visualize it, using
+```code
 - python3 visualize_results.py --config_path=config/layers_num/fashion_mnist.yml
-
+```
 
 Results will be in figures/fashion_mnist_change_layers.pdf
 
