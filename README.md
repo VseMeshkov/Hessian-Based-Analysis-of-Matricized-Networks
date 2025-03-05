@@ -23,7 +23,7 @@ python3 train --config_path=configs/layers_num/fashion_mnist.yml
 
 Visualize it, using
 ```code
-- python3 visualize_results.py --config_path=config/layers_num/fashion_mnist.yml
+python3 visualize_results.py --config_path=config/layers_num/fashion_mnist.yml
 ```
 
 Results will be in figures/fashion_mnist_change_layers.pdf
